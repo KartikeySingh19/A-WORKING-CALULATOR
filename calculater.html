@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CALCULATOR</title>
+    <link rel="stylesheet" href="calculator.css">
+</head>
+<body>
+    <div style="width: 100%; max-width: 320px; margin: 0 auto;">
+  <div class="calc-container">
+    <div class="display">
+      <div class="prev-operand" id="prevOperand"></div>
+      <div class="current-operand" id="currentOperand">0</div>
+    </div>
+    
+    <div class="button-grid">
+      <button class="btn clear" onclick="calculator.clear()">Clear</button>
+      <button class="btn delete" onclick="calculator.delete()"><i class="ti ti-backspace" style="font-size: 16px;"></i></button>
+      <button class="btn operator" onclick="calculator.chooseOperation('÷')">÷</button>
+      <button class="btn operator" onclick="calculator.chooseOperation('×')">×</button>
+      
+      <button class="btn" onclick="calculator.addDigit('7')">7</button>
+      <button class="btn" onclick="calculator.addDigit('8')">8</button>
+      <button class="btn" onclick="calculator.addDigit('9')">9</button>
+      <button class="btn operator" onclick="calculator.chooseOperation('-')">−</button>
+      
+      <button class="btn" onclick="calculator.addDigit('4')">4</button>
+      <button class="btn" onclick="calculator.addDigit('5')">5</button>
+      <button class="btn" onclick="calculator.addDigit('6')">6</button>
+      <button class="btn operator" onclick="calculator.chooseOperation('+')">+</button>
+      
+      <button class="btn" onclick="calculator.addDigit('1')">1</button>
+      <button class="btn" onclick="calculator.addDigit('2')">2</button>
+      <button class="btn" onclick="calculator.addDigit('3')">3</button>
+      <button class="btn operator" onclick="calculator.addDigit('.')">.</button>
+      
+      <button class="btn" onclick="calculator.addDigit('0')" style="grid-column: span 2;">0</button>
+      <button class="btn equals" onclick="calculator.compute()">=</button>
+    </div>
+  </div>
+  
+  <script>
+    class Calculator {
+      constructor(prevOperandEl, currentOperandEl) {
+        this.prevOperandEl = prevOperandEl;
+        this.currentOperandEl = currentOperandEl;
+        this.clear();
+      }
+      
+      clear() {
+        this.currentOperand = '';
+        this.prevOperand = '';
+        this.operation = undefined;
+        this.updateDisplay();
+      }
+      
+      delete() {
+        this.currentOperand = this.currentOperand.toString().slice(0, -1);
+        this.updateDisplay();
+      }
+      
+      addDigit(digit) {
+        if (digit === '.' && this.currentOperand.includes('.')) return;
+        this.currentOperand = this.currentOperand.toString() + digit.toString();
+        this.updateDisplay();
+      }
+      
+      chooseOperation(operation) {
+        if (this.currentOperand === '') return;
+        if (this.prevOperand !== '') {
+          this.compute();
+        }
+        this.operation = operation;
+        this.prevOperand = this.currentOperand;
+        this.currentOperand = '';
+        this.updateDisplay();
+      }
+      
+      compute() {
+        let computation;
+        const prev = parseFloat(this.prevOperand);
+        const current = parseFloat(this.currentOperand);
+        if (isNaN(prev) || isNaN(current)) return;
+        
+        switch (this.operation) {
+          case '+':
+            computation = prev + current;
+            break;
+          case '-':
+            computation = prev - current;
+            break;
+          case '×':
+            computation = prev * current;
+            break;
+          case '÷':
+            computation = prev / current;
+            break;
+          default:
+            return;
+        }
+        
+        this.currentOperand = Math.round(computation * 100000000) / 100000000;
+        this.operation = undefined;
+        this.prevOperand = '';
+        this.updateDisplay();
+      }
+      
+      updateDisplay() {
+        this.currentOperandEl.innerText = this.currentOperand || '0';
+        if (this.operation != null) {
+          this.prevOperandEl.innerText = `${this.prevOperand} ${this.operation}`;
+        } else {
+          this.prevOperandEl.innerText = '';
+        }
+      }
+    }
+    
+    const calculator = new Calculator(
+      document.getElementById('prevOperand'),
+      document.getElementById('currentOperand')
+    );
+  </script>
+</div>
+    
+</body>
+</html>

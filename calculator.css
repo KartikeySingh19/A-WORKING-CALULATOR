@@ -1,0 +1,100 @@
+    .calc-container {
+      background: var(--surface-2);
+      border-radius: 12px;
+      border: 0.5px solid var(--border);
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    .display {
+      background: var(--surface-1);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      text-align: right;
+      min-height: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    
+    .prev-operand {
+      color: var(--text-secondary);
+      font-size: 14px;
+      min-height: 20px;
+    }
+    
+    .current-operand {
+      color: var(--text-primary);
+      font-size: 28px;
+      font-weight: 500;
+      word-wrap: break-word;
+      word-break: break-all;
+      min-height: 36px;
+    }
+    
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    
+    .btn {
+      padding: 12px;
+      border: 0.5px solid var(--border);
+      background: var(--surface-1);
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-primary);
+      transition: all 0.15s ease;
+    }
+    
+    .btn:hover {
+      background: var(--fill-ghost-hover);
+      border-color: var(--border-strong);
+    }
+    
+    .btn:active {
+      transform: scale(0.98);
+    }
+    
+    .btn.operator {
+      color: var(--text-accent);
+      border-color: var(--border-accent);
+    }
+    
+    .btn.operator:hover {
+      background: var(--bg-accent);
+      color: var(--text-accent);
+    }
+    
+    .btn.equals {
+      background: var(--fill-accent);
+      color: var(--on-accent);
+      border-color: var(--fill-accent);
+      grid-column: span 2;
+    }
+    
+    .btn.equals:hover {
+      background: var(--fill-accent);
+      opacity: 0.9;
+    }
+    
+    .btn.clear {
+      background: var(--bg-danger);
+      color: var(--text-danger);
+      border-color: var(--border-danger);
+      grid-column: span 2;
+    }
+    
+    .btn.clear:hover {
+      background: var(--fill-danger);
+      color: var(--on-accent);
+    }
+    
+    .btn.delete {
+      color: var(--text-secondary);
+    }
